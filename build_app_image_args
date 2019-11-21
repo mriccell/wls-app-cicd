@@ -1,0 +1,9 @@
+update 
+--tag=phx.ocir.io/weblogick8s/onprem-domain-image:3.0
+--fromImage=phx.ocir.io/weblogick8s/onprem-domain-image:2.0
+--wdtOperation deploy
+--wdtArchive=./archive.zip 
+--wdtModel=./App_DataSource.yaml
+--wdtDomainHome=/u01/oracle/user_projects/domains/onprem-domain
+--wdtVariables=./domain.properties 
+--wdtVersion=1.1.1
