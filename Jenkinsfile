@@ -10,7 +10,7 @@ pipeline {
     environment {
         WLSIMG_BLDDIR = "${env.WORKSPACE}/resources/build"
         WLSIMG_CACHEDIR = "${env.WORKSPACE}/resources/cache"
-        IMAGE_TAG = "phx.ocir.io/weblogick8s/onprem-domain-image:$(date +%Y%m%d)"
+        IMAGE_TAG = "phx.ocir.io/weblogick8s/onprem-domain-image:${date +%Y%m%d}"
     }
 
     stages {
@@ -59,7 +59,7 @@ pipeline {
                 sh '''
                     export KUBECONFIG=/scratch/k8s-demo/mrcluster_kubeconfig
                     ls ./domain.yaml
-                    kubectl patch domain onprem-domain -n onprem-domain-ns --type='json' -p='[{"op": "replace", "path": "/spec/image", "value": $IMAGE_TAG }]' 
+                    kubectl patch domain onprem-domain -n onprem-domain-ns --type='json' -p='[{"op": "replace", "path": "/spec/image", "value": ${IMAGE_TAG} }]' 
                     kubectl get po -n onprem-domain-ns
                 '''
             }
