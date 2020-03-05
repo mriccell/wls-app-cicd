@@ -37,6 +37,10 @@ pipeline {
         stage ('Build Image') {
             steps {
                 sh '''
+                    export KUBECONFIG=/scratch/k8s-demo/mrcluster_kubeconfig
+                    export OCI_CLI_PROFILE=MONICA
+                    export OCI_CONFIG_FILE=/var/lib/jenkins/.oci/config
+                    kubectl get nodes
                     curl -SLO  https://github.com/oracle/weblogic-image-tool/releases/download/release-1.6.0/imagetool.zip
                     jar xvf imagetool.zip
                     chmod +x imagetool/bin/*
