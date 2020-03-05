@@ -10,7 +10,9 @@ pipeline {
     environment {
         WLSIMG_BLDDIR = "${env.WORKSPACE}/resources/build"
         WLSIMG_CACHEDIR = "${env.WORKSPACE}/resources/cache"
-        IMAGE_TAG = "phx.ocir.io/weblogick8s/onprem-domain-image:${date +%Y%m%d}"
+        Date date = new Date()
+        String datePart = date.format("dd/MM/yyyy")
+        IMAGE_TAG = "phx.ocir.io/weblogick8s/onprem-domain-image:"
     }
 
     stages {
