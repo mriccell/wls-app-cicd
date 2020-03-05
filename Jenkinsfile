@@ -41,6 +41,9 @@ pipeline {
                     export OCI_CLI_PROFILE=MONICA
                     export OCI_CONFIG_FILE=/var/lib/jenkins/.oci/config
                     export PATH=/home/opc/bin:$PATH
+                    whoami
+                    which oci
+                    oci
                     kubectl get nodes
                     curl -SLO  https://github.com/oracle/weblogic-image-tool/releases/download/release-1.6.0/imagetool.zip
                     jar xvf imagetool.zip
