@@ -10,8 +10,6 @@ pipeline {
     environment {
         WLSIMG_BLDDIR = "${env.WORKSPACE}/resources/build"
         WLSIMG_CACHEDIR = "${env.WORKSPACE}/resources/cache"
-        Date date = new Date()
-        String datePart = date.format("dd/MM/yyyy")
         IMAGE_TAG = "phx.ocir.io/weblogick8s/onprem-domain-image:"
     }
 
@@ -20,6 +18,8 @@ pipeline {
             steps {
                 sh '''
                     mkdir -p  ${WLSIMG_BLDDIR} ${WLSIMG_CACHE_DIR}
+                    export IMAGE_TAG="${IMAGE_TAG}$(date +%Y%m%d)"
+                    echo "IMAGE_TAG = ${IMAGE_TAG}" 
                     echo "PATH = ${PATH}"
                     echo "M2_HOME = ${M2_HOME}"
                     echo "JAVA_HOME = ${JAVA_HOME}"
