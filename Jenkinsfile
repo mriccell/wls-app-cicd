@@ -40,7 +40,7 @@ pipeline {
                     export KUBECONFIG=/scratch/k8s-demo/mrcluster_kubeconfig
                     export OCI_CLI_PROFILE=MONICA
                     export OCI_CONFIG_FILE=/var/lib/jenkins/.oci/config
-                    export PATH=/home/opc/bin:$PATH
+                    export PATH=/var/lib/jenkins/bin:$PATH
                     whoami
                     which oci
                     oci
