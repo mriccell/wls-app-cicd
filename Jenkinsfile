@@ -60,6 +60,8 @@ pipeline {
             steps {
                 sh '''
                     export KUBECONFIG=/scratch/k8s-demo/mrcluster_kubeconfig
+                    export OCI_CLI_PROFILE=MONICA
+                    export OCI_CONFIG_FILE=/var/lib/jenkins/.oci/config
                     ls ./domain.yaml
                     kubectl patch domain onprem-domain -n onprem-domain-ns --type='json' -p='[{"op": "replace", "path": "/spec/image", "value": ${IMAGE_TAG} }]' 
                     kubectl get po -n onprem-domain-ns
