@@ -21,6 +21,7 @@ pipeline {
                     mkdir -p  ${WLSIMG_BLDDIR} ${WLSIMG_CACHE_DIR}
                     export IMAGE_TAG="${IMAGE_TAG}$(date +%Y%m%d)"
                     echo "IMAGE_TAG = ${IMAGE_TAG}" 
+                    echo "OLD_IMAGE = ${OLD_IMAGE}" 
                     echo "PATH = ${PATH}"
                     echo "M2_HOME = ${M2_HOME}"
                     echo "JAVA_HOME = ${JAVA_HOME}"
@@ -43,7 +44,7 @@ pipeline {
                     jar xvf imagetool.zip
                     chmod +x imagetool/bin/*
                     rm -rf ${WLSIMG_CACHEDIR}
-                    OLD_IMAGE=docker images phx.ocir.io/weblogick8s/onprem-domain-image
+                    OLD_IMAGE="$(docker images phx.ocir.io/weblogick8s/onprem-domain-image)"
                     echo "OLD_IMAGE = ${OLD_IMAGE}"
                     imagetool/bin/imagetool.sh cache addInstaller --type wdt --path ./weblogic-deploy.zip --version 1.7.1
                     imagetool/bin/imagetool.sh cache addInstaller --type wls --path /scratch/artifacts/imagetool/fmw_12.2.1.4.0_wls_Disk1_1of1.zip --version 12.2.1.4.0
