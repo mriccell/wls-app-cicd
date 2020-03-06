@@ -48,7 +48,7 @@ pipeline {
                     imagetool/bin/imagetool.sh cache addInstaller --type jdk --path /scratch/artifacts/imagetool/jdk-8u212-linux-x64.tar.gz --version 8u212
                     echo "items in cache"
                     imagetool/bin/imagetool.sh cache listItems
-                    imagetool/bin/imagetool.sh update --tag=${IMAGE_TAG} --fromImage=${OLD_IMAGE} --wdtOperation deploy --wdtArchive=./archive.zip --wdtModel=./App_DataSource.yaml --wdtDomainHome=/u01/oracle/user_projects/domains/onprem-domain --wdtVariables=./domain.properties --wdtVersion=1.7.1
+                    imagetool/bin/imagetool.sh update --tag=${IMAGE_TAG} --fromImage=${OLD_IMAGE} --wdtOperation deploy --wdtArchive=./archive.zip --wdtModel=./App_DataSource.yaml --wdtDomainHome=/u01/oracle/user_projects/domains/onprem-domain --wdtVariables=./domain.properties --wdtVersion=1.1.1
                 '''
             }
         }
