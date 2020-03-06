@@ -22,7 +22,7 @@ pipeline {
                     export IMAGE_TAG="${IMAGE_TAG}$(date +%Y%m%d)"
                     echo "IMAGE_TAG = ${IMAGE_TAG}" 
                     echo "OLD_IMAGE = ${OLD_IMAGE}" 
-                    OLD_IMAGE="$(docker images phx.ocir.io/weblogick8s/onprem-domain-image)"
+                    OLD_IMAGE="$(docker images phx.ocir.io/weblogick8s/onprem-domain-image | tail -n +2 | awk '{print $1":"$2}')"
                     echo "docker images OLD_IMAGE = ${OLD_IMAGE}"
                     echo "PATH = ${PATH}"
                     echo "M2_HOME = ${M2_HOME}"
@@ -41,7 +41,7 @@ pipeline {
         stage ('Build Image') {
             steps {
                 sh '''
-                    curl -SLO  https://github.com/oracle/weblogic-image-tool/releases/download/release-1.8.1/imagetool.zip
+                    curl -SLO  https://github.com/oracle/weblogic-image-tool/releases/download/release-1.7.1/imagetool.zip
                     curl -SLO  https://github.com/oracle/weblogic-deploy-tooling/releases/download/release-1.7.1/weblogic-deploy.zip
                     jar xvf imagetool.zip
                     chmod +x imagetool/bin/*
