@@ -10,7 +10,7 @@ pipeline {
     environment {
         WLSIMG_BLDDIR = "${env.WORKSPACE}/resources/build"
         WLSIMG_CACHEDIR = "${env.WORKSPACE}/resources/cache"
-        IMAGE_TAG = "phx.ocir.io/weblogick8s/onprem-domain-image:"
+        IMAGE_TAG = "phx.ocir.io/weblogick8s/onprem-domain-image:${sh(returnStdout: true, script: 'date +%Y%m%d')}"
         OLD_IMAGE = "phx.ocir.io/weblogick8s/onprem-domain-image:1"
     }
 
@@ -19,7 +19,7 @@ pipeline {
             steps {
                 sh '''
                     mkdir -p  ${WLSIMG_BLDDIR} ${WLSIMG_CACHE_DIR}
-                    export IMAGE_TAG="${IMAGE_TAG}$(date +%Y%m%d)"
+                    IMAGE_TAG="${IMAGE_TAG}$(date +%Y%m%d)"
                     echo "IMAGE_TAG = ${IMAGE_TAG}" 
                     echo "OLD_IMAGE = ${OLD_IMAGE}" 
                     OLD_IMAGE="$(docker images phx.ocir.io/weblogick8s/onprem-domain-image | tail -n +2 | awk '{print $1":"$2}')"
@@ -41,10 +41,12 @@ pipeline {
         stage ('Build Image') {
             steps {
                 sh '''
-                    curl -SLO  https://github.com/oracle/weblogic-image-tool/releases/download/release-1.8.0/imagetool.zip
+                    curl -SLO  https://github.com/oracle/weblogic-image-tool/releases/download/release-1.8.1/imagetool.zip
                     curl -SLO  https://github.com/oracle/weblogic-deploy-tooling/releases/download/release-1.7.1/weblogic-deploy.zip
                     unzip -o ./imagetool.zip
                     rm -rf ${WLSIMG_CACHEDIR}
+                    echo "IMAGE_TAG = ${IMAGE_TAG}" 
+                    echo "OLD_IMAGE = ${OLD_IMAGE}" 
                     imagetool/bin/imagetool.sh cache addInstaller --type wdt --path ./weblogic-deploy.zip --version 1.7.1
                     imagetool/bin/imagetool.sh cache addInstaller --type wls --path /scratch/artifacts/imagetool/fmw_12.2.1.4.0_wls_Disk1_1of1.zip --version 12.2.1.4.0
                     imagetool/bin/imagetool.sh cache addInstaller --type jdk --path /scratch/artifacts/imagetool/jdk-8u212-linux-x64.tar.gz --version 8u212
@@ -73,6 +75,11 @@ pipeline {
                     kubectl get po -n onprem-domain-ns
                 '''
             }
-     }
+       }
+  }
+  post {
+    cleanup {
+        deleteDir() /* clean up the workspace */
+    }
   }
 }
