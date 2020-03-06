@@ -10,8 +10,8 @@ pipeline {
     environment {
         WLSIMG_BLDDIR = "${env.WORKSPACE}/resources/build"
         WLSIMG_CACHEDIR = "${env.WORKSPACE}/resources/cache"
-        OLD_IMAGE = "phx.ocir.io/weblogick8s/onprem-domain-image:1"
-        IMAGE_TAG = "phx.ocir.io/weblogick8s/onprem-domain-image:"
+        OLD_IMAGE = """${sh(docker images phx.ocir.io/weblogick8s/onprem-domain-image | tail -n +2 | awk '{print $1":"$2}')}"""
+        IMAGE_TAG = """${sh("phx.ocir.io/weblogick8s/onprem-domain-image:$(date +%Y%m%d)")}"""
     }
 
     stages {
@@ -19,10 +19,6 @@ pipeline {
             steps {
                 sh '''
                     mkdir -p  ${WLSIMG_BLDDIR} ${WLSIMG_CACHE_DIR}
-                    echo "IMAGE_TAG = ${IMAGE_TAG}" 
-                    echo "OLD_IMAGE = ${OLD_IMAGE}" 
-                    env.IMAGE_TAG = "phx.ocir.io/weblogick8s/onprem-domain-image:$(date +%Y%m%d)"
-                    env.OLD_IMAGE = "$(docker images phx.ocir.io/weblogick8s/onprem-domain-image | tail -n +2 | awk '{print $1":"$2}')"
                     echo "IMAGE_TAG = ${IMAGE_TAG}" 
                     echo "OLD_IMAGE = ${OLD_IMAGE}" 
                     echo "PATH = ${PATH}"
