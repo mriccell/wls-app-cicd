@@ -11,7 +11,7 @@ pipeline {
         WLSIMG_BLDDIR = "${env.WORKSPACE}/resources/build"
         WLSIMG_CACHEDIR = "${env.WORKSPACE}/resources/cache"
         OLD_IMAGE = "phx.ocir.io/weblogick8s/onprem-domain-image:1"
-        IMAGE_TAG = "phx.ocir.io/weblogick8s/onprem-domain-image:${sh(returnStdout: true, script: 'date +%Y%m%d')}"
+        IMAGE_TAG = "phx.ocir.io/weblogick8s/onprem-domain-image:"
     }
 
     stages {
@@ -19,9 +19,10 @@ pipeline {
             steps {
                 sh '''
                     mkdir -p  ${WLSIMG_BLDDIR} ${WLSIMG_CACHE_DIR}
-                    ${env.OLD_IMAGE} = "$(docker images phx.ocir.io/weblogick8s/onprem-domain-image | tail -n +2 | awk '{print $1":"$2}')"
-                    echo "IMAGE_TAG = ${IMAGE_TAG}" 
-                    echo "OLD_IMAGE = ${OLD_IMAGE}" 
+                    env.IMAGE_TAG = "${IMAGE_TAG}$(date +%Y%m%d)"
+                    env.OLD_IMAGE = "$(docker images phx.ocir.io/weblogick8s/onprem-domain-image | tail -n +2 | awk '{print $1":"$2}')"
+                    echo "IMAGE_TAG = ${env.IMAGE_TAG}" 
+                    echo "OLD_IMAGE = ${env.OLD_IMAGE}" 
                     echo "PATH = ${PATH}"
                     echo "M2_HOME = ${M2_HOME}"
                     echo "JAVA_HOME = ${JAVA_HOME}"
@@ -43,12 +44,12 @@ pipeline {
                     curl -SLO  https://github.com/oracle/weblogic-deploy-tooling/releases/download/release-1.7.1/weblogic-deploy.zip
                     unzip -o ./imagetool.zip
                     rm -rf ${WLSIMG_CACHEDIR}
-                    echo "IMAGE_TAG = ${IMAGE_TAG}" 
-                    echo "OLD_IMAGE = ${OLD_IMAGE}" 
+                    echo "IMAGE_TAG = ${env.IMAGE_TAG}" 
+                    echo "OLD_IMAGE = ${env.OLD_IMAGE}" 
                     imagetool/bin/imagetool.sh cache addInstaller --type wdt --path ./weblogic-deploy.zip --version 1.7.1
                     imagetool/bin/imagetool.sh cache addInstaller --type wls --path /scratch/artifacts/imagetool/fmw_12.2.1.4.0_wls_Disk1_1of1.zip --version 12.2.1.4.0
                     imagetool/bin/imagetool.sh cache addInstaller --type jdk --path /scratch/artifacts/imagetool/jdk-8u212-linux-x64.tar.gz --version 8u212
-                    imagetool/bin/imagetool.sh update --tag=${IMAGE_TAG} --fromImage=${OLD_IMAGE} --wdtOperation deploy --wdtArchive=./archive.zip --wdtModel=./App_DataSource.yaml --wdtDomainHome=/u01/oracle/user_projects/domains/onprem-domain --wdtVariables=./domain.properties --wdtVersion=1.7.1
+                    imagetool/bin/imagetool.sh update --tag=${env.IMAGE_TAG} --fromImage=${env.OLD_IMAGE} --wdtOperation deploy --wdtArchive=./archive.zip --wdtModel=./App_DataSource.yaml --wdtDomainHome=/u01/oracle/user_projects/domains/onprem-domain --wdtVariables=./domain.properties --wdtVersion=1.7.1
                 '''
             }
         }
