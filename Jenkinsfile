@@ -38,7 +38,7 @@ pipeline {
         stage ('Build Image') {
             steps {
                 sh '''
-                    curl -SLO  https://github.com/oracle/weblogic-image-tool/releases/download/release-1.6.0/imagetool.zip
+                    curl -SLO  https://github.com/oracle/weblogic-image-tool/releases/download/release-1.8.1/imagetool.zip
                     unzip -o ./imagetool.zip
                     rm -rf ${WLSIMG_CACHEDIR}
                     echo "IMAGE_TAG = ${IMAGE_TAG}" 
@@ -68,7 +68,7 @@ pipeline {
                     export PATH=/var/lib/jenkins/bin:$PATH
                     kubectl get nodes
                     ls ./domain.yaml
-                    kubectl patch domain onprem-domain -n onprem-domain-ns --type='json' -p='[{"op": "replace", "path": "/spec/image", "value": '${IMAGE_TAG}' }]' 
+                    kubectl patch domain onprem-domain -n onprem-domain-ns --type='json' -p='[{"op": "replace", "path": "/spec/image", "value": "${IMAGE_TAG}" }]' 
                     kubectl get po -n onprem-domain-ns
                 '''
             }
