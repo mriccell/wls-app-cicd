@@ -44,10 +44,10 @@ pipeline {
                     rm -rf ${WLSIMG_CACHEDIR}
                     docker login phx.ocir.io -u="weblogick8s/monica.riccelli@oracle.com" -p="WebLogic!PM1" 
                     docker images
-                    imagetool/bin/imagetool.sh cache addInstaller --type wdt --path /scratch/artifacts/imagetool/weblogic-deploy.zip --version 1.7.1
+                    imagetool/bin/imagetool.sh cache addInstaller --type wdt --path ./weblogic-deploy.zip --version 1.7.1
                     imagetool/bin/imagetool.sh cache addInstaller --type wls --path /scratch/artifacts/imagetool/fmw_12.2.1.4.0_wls_Disk1_1of1.zip --version 12.2.1.4.0
                     imagetool/bin/imagetool.sh cache addInstaller --type jdk --path /scratch/artifacts/imagetool/jdk-8u212-linux-x64.tar.gz --version 8u212
-                    imagetool/bin/imagetool.sh update --tag=${IMAGE_TAG} --fromImage=phx.ocir.io/weblogick8s/onprem-domain-image:2.0 --wdtOperation deploy --wdtArchive=./archive.zip --wdtModel=./App_DataSource.yaml --wdtDomainHome=/u01/oracle/user_projects/domains/onprem-domain --wdtVariables=./domain.properties --wdtVersion=1.1.1
+                    imagetool/bin/imagetool.sh update --tag=${IMAGE_TAG} --fromImage=phx.ocir.io/weblogick8s/onprem-domain-image:2.0 --wdtOperation deploy --wdtArchive=./archive.zip --wdtModel=./App_DataSource.yaml --wdtDomainHome=/u01/oracle/user_projects/domains/onprem-domain --wdtVariables=./domain.properties --wdtVersion=1.7.1
                 '''
             }
         }
