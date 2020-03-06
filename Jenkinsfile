@@ -12,6 +12,7 @@ pipeline {
         WLSIMG_CACHEDIR = "${env.WORKSPACE}/resources/cache"
         OLD_IMAGE = "phx.ocir.io/weblogick8s/onprem-domain-image:1"
         IMAGE_TAG = "phx.ocir.io/weblogick8s/onprem-domain-image:${sh(returnStdout: true, script: 'date +%Y%m%d')}"
+        OLD_IMAGE = "${sh(returnStdout: true, script: 'docker images phx.ocir.io/weblogick8s/onprem-domain-image | tail -n +2 | awk '{print $1":"$2}'')}"
     }
 
     stages {
