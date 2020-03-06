@@ -19,12 +19,12 @@ pipeline {
             steps {
                 sh '''
                     mkdir -p  ${WLSIMG_BLDDIR} ${WLSIMG_CACHE_DIR}
-                    echo "IMAGE_TAG = ${env.IMAGE_TAG}" 
-                    echo "OLD_IMAGE = ${env.OLD_IMAGE}" 
-                    env.IMAGE_TAG = "phx.ocir.io/weblogick8s/onprem-domain-image:$(date +%Y%m%d)"
-                    env.OLD_IMAGE = "$(docker images phx.ocir.io/weblogick8s/onprem-domain-image | tail -n +2 | awk '{print $1":"$2}')"
-                    echo "IMAGE_TAG = ${env.IMAGE_TAG}" 
-                    echo "OLD_IMAGE = ${env.OLD_IMAGE}" 
+                    echo "IMAGE_TAG = ${IMAGE_TAG}" 
+                    echo "OLD_IMAGE = ${OLD_IMAGE}" 
+                    IMAGE_TAG = "phx.ocir.io/weblogick8s/onprem-domain-image:$(date +%Y%m%d)"
+                    OLD_IMAGE = "$(docker images phx.ocir.io/weblogick8s/onprem-domain-image | tail -n +2 | awk '{print $1":"$2}')"
+                    echo "IMAGE_TAG = ${IMAGE_TAG}" 
+                    echo "OLD_IMAGE = ${OLD_IMAGE}" 
                     echo "PATH = ${PATH}"
                     echo "M2_HOME = ${M2_HOME}"
                     echo "JAVA_HOME = ${JAVA_HOME}"
