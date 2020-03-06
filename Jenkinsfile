@@ -43,8 +43,7 @@ pipeline {
                 sh '''
                     curl -SLO  https://github.com/oracle/weblogic-image-tool/releases/download/release-1.7.1/imagetool.zip
                     curl -SLO  https://github.com/oracle/weblogic-deploy-tooling/releases/download/release-1.7.1/weblogic-deploy.zip
-                    jar xvf imagetool.zip
-                    chmod +x imagetool/bin/*
+                    unzip imagetool.zip
                     rm -rf ${WLSIMG_CACHEDIR}
                     imagetool/bin/imagetool.sh cache addInstaller --type wdt --path ./weblogic-deploy.zip --version 1.7.1
                     imagetool/bin/imagetool.sh cache addInstaller --type wls --path /scratch/artifacts/imagetool/fmw_12.2.1.4.0_wls_Disk1_1of1.zip --version 12.2.1.4.0
