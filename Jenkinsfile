@@ -67,8 +67,7 @@ pipeline {
                     export OCI_CONFIG_FILE=/var/lib/jenkins/.oci/config
                     export PATH=/var/lib/jenkins/bin:$PATH
                     kubectl get nodes
-                    kubectl patch domain onprem-domain -n onprem-domain-ns --type='json' -p='[{"op": "replace", "path": "/spec/image", "value": '${IMAGE_TAG}' }]' 
-kubectl patch domain onprem-domain -n onprem-domain-ns --type='json' -p='[{"op": "replace", "path": "/spec/image", "value": '"${IMAGE_TAG}"' }]'
+                    kubectl patch domain onprem-domain -n onprem-domain-ns --type='json' -p='[{"op": "replace", "path": "/spec/image", "value": '"${IMAGE_TAG}"' }]' 
                     kubectl get po -n onprem-domain-ns
                 '''
             }
