@@ -39,6 +39,8 @@ pipeline {
                     curl -SLO  https://github.com/oracle/weblogic-image-tool/releases/download/release-1.8.1/imagetool.zip
                     unzip -o ./imagetool.zip
                     rm -rf ${WLSIMG_CACHEDIR}
+                    docker rmi -f phx.ocir.io/weblogick8s/onprem-domain-image:20200306
+                    docker rmi -f phx.ocir.io/weblogick8s/onprem-domain-image:1.0
                     export OLD_IMAGE = "$(docker images phx.ocir.io/weblogick8s/onprem-domain-image | tail -n +2 | awk '{print $1":"$2}')"
                     echo "IMAGE_TAG = ${IMAGE_TAG}" 
                     echo "OLD_IMAGE = ${OLD_IMAGE}" 
