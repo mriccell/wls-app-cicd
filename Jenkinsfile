@@ -10,7 +10,7 @@ pipeline {
     environment {
         WLSIMG_BLDDIR = "${env.WORKSPACE}/resources/build"
         WLSIMG_CACHEDIR = "${env.WORKSPACE}/resources/cache"
-        IMAGE_TAG = "phx.ocir.io/weblogick8s/onprem-domain-image:${sh(returnStdout: true, script: 'date +%Y%m%d-%H%M%S')}"
+        IMAGE_TAG = "phx.ocir.io/weblogick8s/onprem-domain-image:${sh(returnStdout: true, script: 'date +%Y%m%d%H%M%S')}"
     }
 
     stages {
