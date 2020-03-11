@@ -13,7 +13,7 @@ import="java.net.InetAddress"%>
 <!DOCTYPE html>
 <html>
 <body>
-        <h1>WebLogic Operator Demo App 2 - MBean properties for DELTEK:</font></h1><br>
+        <h1>WebLogic Operator Demo App - MBean properties for Monica:</font></h1><br>
 	<%
 		String jdbcDataSourceName = request.getParameter("dsname");
 		StringBuffer message = new StringBuffer();
