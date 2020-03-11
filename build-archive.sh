@@ -25,5 +25,5 @@ fi
 
 rm -Rf ${scriptDir}/archive
 mkdir -p ${scriptDir}/archive/wlsdeploy/applications
-${JAVA_HOME}/bin/jar cvf ${scriptDir}/archive/wlsdeploy/applications/opdemo.war -C ${scriptDir} src/* 
+${JAVA_HOME}/bin/jar cvf ${scriptDir}/archive/wlsdeploy/applications/opdemo.war -C ${scriptDir}/opdemo WEB-INF -C ${scriptDir}/opdemo index.jsp
 ${JAVA_HOME}/bin/jar cvf ${scriptDir}/archive.zip  -C ${scriptDir}/archive wlsdeploy
