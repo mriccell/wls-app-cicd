@@ -37,7 +37,7 @@ resources:
                     DriverName: oracle.jdbc.OracleDriver
                     Properties:
                         user:
-                            Value: scott
+                            Value: '@@PROP:DB_USER@@'
 appDeployments:
     Application:
         opdemo:
