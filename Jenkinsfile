@@ -39,7 +39,7 @@ pipeline {
                     curl -SLO  https://github.com/oracle/weblogic-image-tool/releases/download/release-1.8.1/imagetool.zip
                     unzip -o ./imagetool.zip
                     rm -rf ${WLSIMG_CACHEDIR}
-                    export OLD_IMAGE="$(docker images | grep  phx.ocir.io/weblogick8s/onprem-domain-image | tail -n +2 | awk '{print $1":"$2}' | sed -n '1p')"
+                    export OLD_IMAGE="$(docker images | grep  phx.ocir.io/weblogick8s/onprem-domain-image | head -n +2 | awk '{print $1":"$2}' | sed -n '1p')"
                     echo "IMAGE_NAME = ${IMAGE_NAME}" 
                     echo "OLD_IMAGE = ${OLD_IMAGE}" 
                     imagetool/bin/imagetool.sh cache addInstaller --type wdt --path /scratch/artifacts/imagetool/weblogic-deploy.zip --version 1.1.1
